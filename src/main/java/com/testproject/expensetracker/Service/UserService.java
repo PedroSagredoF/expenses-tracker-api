@@ -1,6 +1,7 @@
 package com.testproject.expensetracker.Service;
 
 import com.testproject.expensetracker.domain.User;
+import com.testproject.expensetracker.exceptions.EtAuthException;
 
 public interface UserService {
 
