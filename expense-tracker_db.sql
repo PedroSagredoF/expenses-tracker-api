@@ -8,7 +8,7 @@ alter default privileges grant all on sequences to expensetracker;
 
 create table et_users(
     user_id integer primary key not null,
-    firts_name varchar(20) not null,
+    first_name varchar(20) not null,
     last_name varchar(20) not null,
     email varchar(30) not null,
     password text not null
@@ -37,7 +37,7 @@ alter table et_transactions add constraint trans_users_fk foreign key (user_id) 
 
 create sequence et_users_seq increment 1 start 1;
 create sequence et_categories_seq increment 1 start 1;
-create sequence et_transactionts_seq increment 1 start 1000;
+create sequence et_transactions_seq increment 1 start 1000;
 
 
 
