@@ -21,7 +21,7 @@ public class UserResource {
     UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String,String>> resgiterUser(@RequestBody Map<String, Object> userMap){
+    public ResponseEntity<Map<String, String>> registerUser(@RequestBody Map<String, Object> userMap) {
         String firstName = (String) userMap.get("firstName");
         String lastName = (String) userMap.get("lastName");
         String email = (String) userMap.get("email");
@@ -31,7 +31,5 @@ public class UserResource {
         map.put("message","register successfully");
         return  new ResponseEntity<>(map, HttpStatus.OK);
     }
-
-
 }
 

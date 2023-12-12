@@ -31,14 +31,12 @@ public class UserServiceImpl implements UserService{
         logger.info("Inside registerUser");
         Pattern pattern = Pattern.compile("^(.+)@(.+)$");
         if(email != null) email = email.toLowerCase();
-        if (pattern.matcher(email).matches())
+        if (!pattern.matcher(email).matches())
             throw new EtAuthException("Invalid email format") ;
 
         Integer count = userRepository.getCountByEmail(email);
         if(count > 0) throw new EtAuthException("Email allready in use");
         Integer userId = userRepository.createUser(firstName, lastName, email, password);
         return userRepository.findUserById(userId);
-
-
     }
 }
