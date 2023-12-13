@@ -5,6 +5,7 @@ import com.testproject.expensetracker.exceptions.EtAuthException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
@@ -24,6 +25,9 @@ public class UserRepositoryImpl implements UserRepository{
     private static final String SQL_COUNT_BY_EMAIL = "SELECT COUNT(*) FROM ET_USERS WHERE EMAIL = ?";
     private static final String SQL_FIND_BY_ID = "SELECT USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD "+
             "FROM ET_USERS WHERE USER_ID = ?";
+
+    private static final String SQL_FIND_BY_EMAIL = "SELECT USER_ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD "+
+            "FROM ET_USERS WHERE EMAIL = ?";
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -52,8 +56,15 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public User findEmailAndPass(String email, String pass) throws EtAuthException {
         logger.info("Inside findEmailAndPass");
+        try {
+            User user=  jdbcTemplate.queryForObject(SQL_FIND_BY_EMAIL, new Object[]{email}, userRowMapper);
+            if(!pass.equals(user.getPassword())) throw new EtAuthException("Invalid email or password");
+            return user;
 
-        return null;
+        } catch (EmptyResultDataAccessException e){
+            throw new EtAuthException("Invalid email or password");
+        }
+
     }
 
     @Override
