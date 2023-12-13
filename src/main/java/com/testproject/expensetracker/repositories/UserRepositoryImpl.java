@@ -2,6 +2,7 @@ package com.testproject.expensetracker.repositories;
 
 import com.testproject.expensetracker.domain.User;
 import com.testproject.expensetracker.exceptions.EtAuthException;
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -34,6 +36,7 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public Integer createUser(String firstName, String lastName, String email, String password)
             throws EtAuthException {
+        String hashedPass = BCrypt.hashpw(password, BCrypt.gensalt(10));
         try{
             logger.info("Inside createUser");
             KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -41,7 +44,7 @@ public class UserRepositoryImpl implements UserRepository{
                 ps.setString(1,firstName);
                 ps.setString(2,lastName);
                 ps.setString(3,email);
-                ps.setString(4,password);
+                ps.setString(4,hashedPass);
 
                 return ps;}, keyHolder);
             return (Integer) keyHolder.getKeys().get("USER_ID");
@@ -58,7 +61,7 @@ public class UserRepositoryImpl implements UserRepository{
         logger.info("Inside findEmailAndPass");
         try {
             User user=  jdbcTemplate.queryForObject(SQL_FIND_BY_EMAIL, new Object[]{email}, userRowMapper);
-            if(!pass.equals(user.getPassword())) throw new EtAuthException("Invalid email or password");
+            if(!BCrypt.checkpw(pass, user.getPassword())) throw new EtAuthException("Invalid email or password");
             return user;
 
         } catch (EmptyResultDataAccessException e){
