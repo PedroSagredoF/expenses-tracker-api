@@ -5,12 +5,12 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Categories {
+public class Category {
 
     private Integer category_id;
-    private Integer uder_id;
-    private String titte;
-    private String descripction;
+    private Integer user_id;
+    private String title;
+    private String description;
     private Double totalExpense;
 
 }
