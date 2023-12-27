@@ -17,29 +17,29 @@ import java.io.IOException;
 
 public class AuthFilter extends GenericFilterBean {
     @Override
-    public void doFilter (ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        HttpServletRequest httpRequest =(HttpServletRequest) servletRequest;
+        HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
         String authHeader = httpRequest.getHeader("Authorization");
-        if(authHeader != null) {
+        if (authHeader != null) {
             String[] authHeaderArr = authHeader.split("Bearer");
-            if(authHeaderArr.length >1 && authHeaderArr[1] != null){
+            if (authHeaderArr.length > 1 && authHeaderArr[1] != null) {
                 String token = authHeaderArr[1];
-                try{
+                try {
                     Claims claims = Jwts.parser().setSigningKey(Constants.API_SECRET_KEY).parseClaimsJws(token).getBody();
-                    httpRequest.setAttribute("userId", Integer.parseInt(claims.get("userId").toString()));
-                } catch (Exception e){
+                    httpRequest.setAttribute("user_id", Integer.parseInt(claims.get("user_id").toString()));
+                } catch (Exception e) {
                     httpResponse.sendError(HttpStatus.FORBIDDEN.value(), "invalid or expired token");
                     return;
                 }
 
-            }else{
+            } else {
                 httpResponse.sendError(HttpStatus.FORBIDDEN.value(), ("Authotization Token must be Bearer [token]"));
                 return;
             }
-        }else {
+        } else {
             httpResponse.sendError(HttpStatus.FORBIDDEN.value(), ("Authotization Token must be provided"));
             return;
         }

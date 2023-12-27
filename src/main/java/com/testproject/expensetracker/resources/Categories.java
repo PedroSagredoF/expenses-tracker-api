@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class Categories {
 
     @GetMapping("")
-    public String getAllCategories(HttpServletRequest request){
-        int userId = (Integer) request.getAttribute("userId");
-        return "Autenticated! UserId: "+ userId;
+    public String getAllCategories(HttpServletRequest request) {
+        int userId = (Integer) request.getAttribute("user_id");
+        return "Autenticated! UserId: " + userId;
     }
 }

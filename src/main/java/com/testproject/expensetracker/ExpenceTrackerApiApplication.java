@@ -15,7 +15,7 @@ public class ExpenceTrackerApiApplication {
     }
 
     @Bean
-    public FilterRegistrationBean<AuthFilter> filterRegistrationBean(){
+    public FilterRegistrationBean<AuthFilter> filterRegistrationBean() {
         FilterRegistrationBean<AuthFilter> registrationBean = new FilterRegistrationBean<>();
         AuthFilter authFilter = new AuthFilter();
         registrationBean.setFilter(authFilter);

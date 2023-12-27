@@ -26,7 +26,7 @@ public class UserResource {
     UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> loginUser(@RequestBody Map <String, Object> userMap ){
+    public ResponseEntity<Map<String, String>> loginUser(@RequestBody Map<String, Object> userMap) {
         String email = (String) userMap.get("email");
         String password = (String) userMap.get("password");
         User user = userService.validateUser(email, password);
@@ -40,21 +40,22 @@ public class UserResource {
         String email = (String) userMap.get("email");
         String password = (String) userMap.get("password");
         User user = userService.registerUser(firstName, lastName, email, password);
-        return  new ResponseEntity<>(generateJWTToken(user), HttpStatus.OK);
+        return new ResponseEntity<>(generateJWTToken(user), HttpStatus.OK);
     }
 
-    private Map<String,String> generateJWTToken (User user){
+    private Map<String, String> generateJWTToken(User user) {
         long timestamp = System.currentTimeMillis();
         String token = Jwts.builder().signWith(SignatureAlgorithm.HS256, Constants.API_SECRET_KEY)
                 .setIssuedAt(new Date(timestamp))
                 .setExpiration(new Date(timestamp + Constants.TOKEN_VALIDITY))
+                .claim("user_id", user.getEmail())
                 .claim("email", user.getEmail())
                 .claim("firstName", user.getFirstName())
                 .claim("user_id", user.getUser_id())
                 .claim("lastName", user.getLastName())
                 .compact();
-        Map<String, String> map =new HashMap();
-        map.put("token",token);
+        Map<String, String> map = new HashMap();
+        map.put("token", token);
         return map;
     }
 }

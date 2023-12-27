@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -31,12 +31,12 @@ public class UserServiceImpl implements UserService{
     public User registerUser(String firstName, String lastName, String email, String password) throws EtAuthException {
         logger.info("Inside registerUser");
         Pattern pattern = Pattern.compile("^(.+)@(.+)$");
-        if(email != null) email = email.toLowerCase();
+        if (email != null) email = email.toLowerCase();
         if (!pattern.matcher(email).matches())
-            throw new EtAuthException("Invalid email format") ;
+            throw new EtAuthException("Invalid email format");
 
         Integer count = userRepository.getCountByEmail(email);
-        if(count > 0) throw new EtAuthException("Email allready in use");
+        if (count > 0) throw new EtAuthException("Email allready in use");
         Integer userId = userRepository.createUser(firstName, lastName, email, password);
         return userRepository.findUserById(userId);
     }
