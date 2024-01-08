@@ -6,19 +6,17 @@ import com.testproject.expensetracker.exceptions.EtResourceNotFoundException;
 
 import java.util.List;
 
-public interface CategoryServices {
+public interface CategoryService {
 
     List<Category> fetchAllCategories(Integer userId);
 
-    Category FetchCategoryById(Integer userID, Integer categoryId) throws EtResourceNotFoundException;
+    Category fetchCategoryById(Integer userID, Integer categoryId) throws EtResourceNotFoundException;
 
     Category addCategory(Integer userId, String tittle, String description) throws EtBadRequestException;
 
     void updateCategory(Integer uderId, Integer categoryId, Category category) throws EtBadRequestException;
 
     void removeCategoryWithAllTransactions(Integer userId, Integer categoryId) throws EtBadRequestException;
-
-
 
 
 
