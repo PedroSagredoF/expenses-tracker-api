@@ -66,9 +66,12 @@ public class CategoryRepositoryImpl implements CategoryRepository{
 
     @Override
     public void removeById(Integer userId, Integer categoryId) {
-        int count = jdbcTemplate.update(Constants.SQL_DELETE_CATEGORY, new Object[]{userId, categoryId});
-        if(count == 0)
-            throw new EtResourceNotFoundException("Category Not Found");
+        this.removeAllCatAndTrans(categoryId);
+        jdbcTemplate.update(Constants.SQL_DELETE_CATEGORY, new Object[]{userId, categoryId});
+    }
+
+    private void removeAllCatAndTrans(Integer categoryId){
+        jdbcTemplate.update(Constants.SQL_DELETE_ALL_TRANSACTIONS, new Object[]{categoryId});
     }
 
     private RowMapper<Category> categoryRowMapper = ((rs, rowNum) ->{
