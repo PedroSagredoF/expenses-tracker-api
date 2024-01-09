@@ -5,7 +5,6 @@ import com.testproject.expensetracker.constans.Constants;
 import com.testproject.expensetracker.domain.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +53,7 @@ public class UserResource {
                 .claim("user_id", user.getUser_id())
                 .claim("lastName", user.getLastName())
                 .compact();
-        Map<String, String> map = new HashMap();
+        Map<String, String> map = new HashMap<>();
         map.put("token", token);
         return map;
     }

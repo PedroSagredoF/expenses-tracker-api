@@ -3,7 +3,6 @@ package com.testproject.expensetracker.resources;
 import com.testproject.expensetracker.Service.CategoryService;
 import com.testproject.expensetracker.domain.Category;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +27,7 @@ public class CategoryResource {
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<Category> getCategiryById(HttpServletRequest request,
+    public ResponseEntity<Category> getCategoryById(HttpServletRequest request,
                                                     @PathVariable("categoryId") Integer categoryId){
         int userId = (Integer) request.getAttribute("user_id");
         Category category = categoryService.fetchCategoryById(userId, categoryId);

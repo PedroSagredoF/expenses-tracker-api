@@ -1,7 +1,6 @@
 package com.testproject.expensetracker.filters;
 
 import com.testproject.expensetracker.constans.Constants;
-import io.jsonwebtoken.ClaimJwtException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;

@@ -3,7 +3,7 @@ package com.testproject.expensetracker.Service;
 import com.testproject.expensetracker.domain.User;
 import com.testproject.expensetracker.exceptions.EtAuthException;
 import com.testproject.expensetracker.repositories.UserRepository;
-import org.slf4j.ILoggerFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

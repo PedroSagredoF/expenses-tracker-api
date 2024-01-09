@@ -1,7 +1,6 @@
 package com.testproject.expensetracker;
 
 import com.testproject.expensetracker.filters.AuthFilter;
-import jakarta.servlet.FilterRegistration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
