@@ -38,4 +38,6 @@ public class Constants {
             "WHERE USER_ID = ? AND CATEGORY_ID = ? AND TRANSACTION_ID = ?";
 
     public static final String SQL_DELETE_TRANSACTION = "DELETE FROM ET_TRANSACTIONS WHERE USER_ID = ? AND CATEGORY_ID = ? AND TRANSACTION_ID = ?";
+
+    public static final String SQL_DELETE_CATEGORY = "DELETE FROM ET_CATEGORIES WHERE USER_ID = ? AND CATEGORY_ID = ?";
 }
